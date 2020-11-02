@@ -1,9 +1,5 @@
 ### Escuela Colombiana de Ingeniería
-### Arquitecturas de Software - ARSW-Laboratorio-8
-
-### Integrantes
-Guillermo Esteban Bernal Bonilla
-Edwin Yesid Rodriguez Maldonado
+### Arquitecturas de Software - ARSW
 
 ## Escalamiento en Azure con Maquinas Virtuales, Sacale Sets y Service Plans
 
@@ -27,28 +23,13 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
     * Username = scalability_lab
     * SSH publi key = Su llave ssh publica
 
-![Imágen 1](images/img/1.png)
+![Imágen 1](images/part1/part1-vm-basic-config.png)
 
 2. Para conectarse a la VM use el siguiente comando, donde las `x` las debe remplazar por la IP de su propia VM.
 
     `ssh scalability_lab@xxx.xxx.xxx.xxx`
 
 3. Instale node, para ello siga la sección *Installing Node.js and npm using NVM* que encontrará en este [enlace](https://linuxize.com/post/how-to-install-node-js-on-ubuntu-18.04/).
-
-	![Imágen 1](images/img/2.png)
-	
-	![Imágen 1](images/img/3.png)
-	
-	Instalando Node.js and npm
-	
-	![Imágen 1](images/img/4.png)
-	
-	![Imágen 1](images/img/5.png)
-	
-	![Imágen 1](images/img/6.png)
-	
-	![Imágen 1](images/img/7.png)
-
 4. Para instalar la aplicación adjunta al Laboratorio, suba la carpeta `FibonacciApp` a un repositorio al cual tenga acceso y ejecute estos comandos dentro de la VM:
 
     `git clone <your_repo>`
@@ -56,76 +37,35 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
     `cd <your_repo>/FibonacciApp`
 
     `npm install`
-	
-	![Imágen 1](images/img/8.png)
-	
 
 5. Para ejecutar la aplicación puede usar el comando `npm FibinacciApp.js`, sin embargo una vez pierda la conexión ssh la aplicación dejará de funcionar. Para evitar ese compartamiento usaremos *forever*. Ejecute los siguientes comando dentro de la VM.
 
     `npm install forever -g`
 
     `forever start FibinacciApp.js`
-	
-	![Imágen 1](images/img/9.png)
 
 6. Antes de verificar si el endpoint funciona, en Azure vaya a la sección de *Networking* y cree una *Inbound port rule* tal como se muestra en la imágen. Para verificar que la aplicación funciona, use un browser y user el endpoint `http://xxx.xxx.xxx.xxx:3000/fibonacci/6`. La respuesta debe ser `The answer is 8`.
 
-![](images/img/10.png)
-
-![](images/img/11.png)
-
-![](images/img/12.png)
+![](images/part1/part1-vm-3000InboudRule.png)
 
 7. La función que calcula en enésimo número de la secuencia de Fibonacci está muy mal construido y consume bastante CPU para obtener la respuesta. Usando la consola del Browser documente los tiempos de respuesta para dicho endpoint usando los siguintes valores:
     * 1000000
-	
-	![](images/img/14.png)
-	
     * 1010000
-	
-	![](images/img/15.png)
-	
     * 1020000
-	
-	![](images/img/16.png)
-	
     * 1030000
-	
-	![](images/img/17.png)
-	
     * 1040000
-	
-	![](images/img/18.png)
-	
     * 1050000
-	
-	![](images/img/19.png)
-	
     * 1060000
-	
-	![](images/img/20.png)
-	
     * 1070000
-	
-	![](images/img/21.png)
-	
     * 1080000
-	
-	![](images/img/22.png)
-	
     * 1090000    
-	
-	![](images/img/23.png)
 
 8. Dírijase ahora a Azure y verifique el consumo de CPU para la VM. (Los resultados pueden tardar 5 minutos en aparecer).
 
-![](images/img/24.png)
+![Imágen 2](images/part1/part1-vm-cpu.png)
 
 9. Ahora usaremos Postman para simular una carga concurrente a nuestro sistema. Siga estos pasos.
     * Instale newman con el comando `npm install newman -g`. Para conocer más de Newman consulte el siguiente [enlace](https://learning.getpostman.com/docs/postman/collection-runs/command-line-integration-with-newman/).
-	
-	![](images/img/25.png)
-	
     * Diríjase hasta la ruta `FibonacciApp/postman` en una maquina diferente a la VM.
     * Para el archivo `[ARSW_LOAD-BALANCING_AZURE].postman_environment.json` cambie el valor del parámetro `VM1` para que coincida con la IP de su VM.
     * Ejecute el siguiente comando.
@@ -134,65 +74,12 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
     newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10 &
     newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10
     ```
-	
-	![](images/img/a1.png)
-	
-	![](images/img/a2.png)
-	
+
 10. La cantidad de CPU consumida es bastante grande y un conjunto considerable de peticiones concurrentes pueden hacer fallar nuestro servicio. Para solucionarlo usaremos una estrategia de Escalamiento Vertical. En Azure diríjase a la sección *size* y a continuación seleccione el tamaño `B2ms`.
 
-![](images/img/27.png)
-
-![](images/img/28.png)
+![Imágen 3](images/part1/part1-vm-resize.png)
 
 11. Una vez el cambio se vea reflejado, repita el paso 7, 8 y 9.
-
-	* 1000000
-	
-	![](images/img/29.png)
-	
-    * 1010000
-	
-	![](images/img/30.png)
-	
-    * 1020000
-	
-	![](images/img/31.png)
-	
-    * 1030000
-	
-	![](images/img/32.png)
-	
-    * 1040000
-	
-	![](images/img/33.png)
-	
-    * 1050000
-	
-	![](images/img/34.png)
-	
-    * 1060000
-	
-	![](images/img/35.png)
-	
-    * 1070000
-	
-	![](images/img/36.png)
-	
-    * 1080000
-	
-	![](images/img/37.png)
-	
-    * 1090000    
-	
-	![](images/img/38.png)
-	
-![](images/img/39.png)
-
-![](images/img/40.png)
-
-![](images/img/41.png)
-
 12. Evalue el escenario de calidad asociado al requerimiento no funcional de escalabilidad y concluya si usando este modelo de escalabilidad logramos cumplirlo.
 13. Vuelva a dejar la VM en el tamaño inicial para evitar cobros adicionales.
 
