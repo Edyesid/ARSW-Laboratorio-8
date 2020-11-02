@@ -1,2 +1,11 @@
 http://40.78.4.253:3000/fibonacci/6
 ssh -i C:\Users\Edwin\OneDrive\2020-2\ARSW\ARSW-Laboratorio-8\myKeySshPublic.pem scalability_lab@40.78.4.253
+
+ssh -i C:\Users\Edwin\OneDrive\2020-2\ARSW\ARSW-Laboratorio-8\llaves\VM1_key.pem vm1@40.67.241.237
+ssh -i C:\Users\Edwin\OneDrive\2020-2\ARSW\ARSW-Laboratorio-8\llaves\VM2_key.pem vm2@13.79.122.137
+ssh -i C:\Users\Edwin\OneDrive\2020-2\ARSW\ARSW-Laboratorio-8\llaves\VM3_key_1102.pem vm3@40.113.35.221
+
+newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10 & newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10
+
+
+newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10 & newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10 & newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10 & newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10
