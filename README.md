@@ -282,7 +282,12 @@ Realice este proceso para las 3 VMs, por ahora lo haremos a mano una por una, si
 
 ```
 http://52.155.223.248/
+
+![](images/img/parte2/19.png)
+
 http://52.155.223.248/fibonacci/1
+
+![](images/img/parte2/20.png)
 ```
 
 2. Realice las pruebas de carga con `newman` que se realizaron en la parte 1 y haga un informe comparativo donde contraste: tiempos de respuesta, cantidad de peticiones respondidas con éxito, costos de las 2 infraestrucruras, es decir, la que desarrollamos con balanceo de carga horizontal y la que se hizo con una maquina virtual escalada.
