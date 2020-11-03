@@ -299,12 +299,19 @@ newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALAN
 newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10 &
 newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10
 ```
+MV1
 
 ![](images/img/parte2/3-1.png)
 
+MV2
+
 ![](images/img/parte2/3-2.png)
 
+MV3
+
 ![](images/img/parte2/3-3.png)
+
+MV4
 
 ![](images/img/parte2/3-4.png)
 
